@@ -52,7 +52,7 @@ async def bullshark_info(ctx, address):
         num_commands_journey_to_mount_sogol = result['numCommandsJourneyToMountSogol']
         num_commands_mini_miners = result['numCommandsMiniMiners']
 
-        response_message = f"Score: **{score}\nBot: **{bot_status}\nRank: **{rank}**\nReward: **{reward}**\n"
+        response_message = f"Score: **{score}**\nBot: **{bot_status}**\nRank: **{rank}**\nReward: **{reward}**\n"
         response_message += f"NumCommandsDeSuiFlip: {num_commands_de_sui_flip}\n"
         response_message += f"NumCommandsEthos8192: {num_commands_ethos8192}\n"
         response_message += f"NumCommandsJourneyToMountSogol: {num_commands_journey_to_mount_sogol}\n"

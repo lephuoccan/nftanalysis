@@ -23,7 +23,7 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 
 def get_bullshark_info(address):
     try:
-        url = f'https://quests.mystenlabs.com/api/trpc/user?batch=1&input={{"0": {{"address": "{address}"}}}}'
+        url = f'https://quests.mystenlabs.com/api/trpc/user?batch=1&input={{"0":{{"address":"{address}","questId":2}}}}'
         response = requests.get(url)
         data = response.json()
         return data
@@ -47,19 +47,29 @@ async def bullshark_info(ctx, address):
         bot_status = result['bot']
         rank = result['rank']
         reward = result['reward']
-        num_commands_de_sui_flip = result['numCommandsDeSuiFlip']
-        num_commands_ethos8192 = result['numCommandsEthos8192']
-        num_commands_journey_to_mount_sogol = result['numCommandsJourneyToMountSogol']
-        num_commands_mini_miners = result['numCommandsMiniMiners']
-
-        response_message = f"Score: **{score}**\nBot: **{bot_status}**\nRank: **{rank}**\nReward: **{reward}**\n"
-        response_message += f"NumCommandsDeSuiFlip: {num_commands_de_sui_flip}\n"
-        response_message += f"NumCommandsEthos8192: {num_commands_ethos8192}\n"
-        response_message += f"NumCommandsJourneyToMountSogol: {num_commands_journey_to_mount_sogol}\n"
-        response_message += f"NumCommandsMiniMiners: {num_commands_mini_miners}"
-
+        metadata = result['metadata']
+        SUI_TVL = metadata['SUI_TVL']
+        NAVI_VALUE = metadata['NAVI_VALUE']
+        CETUS_VALUE = metadata['CETUS_VALUE']
+        KRIYA_VALUE = metadata['KRIYA_VALUE']
+        TYPUS_VALUE = metadata['TYPUS_VALUE']
+        TURBOS_VALUE = metadata['TURBOS_VALUE']
+        SCALLOP_VALUE = metadata['SCALLOP_VALUE']
+        NON_SUI_TVL =  metadata['NON_SUI_TVL_IN_USD']
+        Apps_used = metadata['appsUsed']
+        Apps_used_num = len(Apps_used)
+        response_message = f"### SCORE: **{score}**\n### BOT FLAG: **{bot_status}**\n### RANK: **{rank}**\n### REWARD: **{reward}**\n"
+        response_message += f"> SUI TVL: **{SUI_TVL}** SUI\n"
+        response_message += f"> NON SUI TVL: **{NON_SUI_TVL}** USD\n"
+        response_message += f"> NAVI Points: {NAVI_VALUE}\n"
+        response_message += f"> CETUS Points: {CETUS_VALUE}\n"
+        response_message += f"> KRIYA Points: {KRIYA_VALUE}\n"
+        response_message += f"> TYPUS Points: {TYPUS_VALUE}\n"
+        response_message += f"> TURBOS Points: {TURBOS_VALUE}\n"
+        response_message += f"> SCALLOP Points: {SCALLOP_VALUE}\n"
+        response_message += f"### APPs USED: {Apps_used_num}/6\n"
         await ctx.message.reply(response_message)
     except Exception as e:
-        await ctx.message.reply('Đã xảy ra lỗi khi lấy dữ liệu. Vui lòng thử lại sau.')
+        await ctx.message.reply("Lỗi không thể lấy dữ liệu từ mystenlab")
 
 bot.run(TOKEN)
